@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard | O'qituvchi Panel{% endblock %}
+{% block header_title %}O'qituvchi Boshqaruvi{% endblock %}
+
+{% block content %}
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between transition-transform transform hover:-translate-y-1">
+        <div>
+            <p class="text-xs font-medium text-gray-500 uppercase">Mening Guruhlarim</p>
+            <h3 class="text-2xl font-bold text-gray-800 mt-1">{{ total_groups }}</h3>
+        </div>
+        <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center">👥</div>
+    </div>
+    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between transition-transform transform hover:-translate-y-1">
+        <div>
+            <p class="text-xs font-medium text-gray-500 uppercase">Faol Vazifalar</p>
+            <h3 class="text-2xl font-bold text-gray-800 mt-1">{{ active_assignments }}</h3>
+        </div>
+        <div class="w-10 h-10 bg-green-50 text-green-600 rounded-full flex items-center justify-center">📝</div>
+    </div>
+</div>
+
+<div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 mb-8">
+    <h3 class="text-lg font-bold text-gray-800 mb-4">So'nggi Topshirilgan Uy Vazifalari</h3>
+    <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="bg-gray-50 text-gray-600 text-xs uppercase border-b">
+                    <th class="py-3 px-4 font-medium">O'quvchi</th>
+                    <th class="py-3 px-4 font-medium">Vazifa</th>
+                    <th class="py-3 px-4 font-medium">Sana</th>
+                    <th class="py-3 px-4 font-medium text-right">Tekshirish</th>
+                </tr>
+            </thead>
+            <tbody class="text-gray-700 text-sm">
+                {% for sub in recent_submissions %}
+                <tr class="border-b transition hover:bg-gray-50">
+                    <td class="py-3 px-4 font-medium">{{ sub.student.first_name }} {{ sub.student.last_name }}</td>
+                    <td class="py-3 px-4 text-indigo-600 font-medium">{{ sub.assignment.title }}</td>
+                    <td class="py-3 px-4 text-gray-500">{{ sub.submitted_at|date:"d M Y, H:i" }}</td>
+                    <td class="py-3 px-4 text-right"><button class="text-sm font-medium bg-indigo-50 text-indigo-600 px-3 py-1 rounded">Baho qo'yish</button></td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="4" class="py-4 text-center text-gray-400">Hech qanday yangi vazifalar topshirilmagan.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

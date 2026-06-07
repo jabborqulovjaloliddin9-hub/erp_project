@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Natijalar | Admin Panel{% endblock %}
+{% block header_title %}Yakuniy Natijalar va Baholar{% endblock %}
+{% block content %}
+<div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="p-6 border-b border-gray-100 flex justify-between items-center">
+        <h3 class="text-xl font-bold text-gray-800">O'quvchilar O'zlashtirishi</h3>
+    </div>
+    <div class="p-0 overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="bg-gray-50 text-gray-600 text-sm border-b">
+                    <th class="py-4 px-6 font-medium">O'quvchi</th>
+                    <th class="py-4 px-6 font-medium">Guruh</th>
+                    <th class="py-4 px-6 font-medium">Turi</th>
+                    <th class="py-4 px-6 font-medium">Baho</th>
+                </tr>
+            </thead>
+            <tbody class="text-gray-700">
+                {% for g in grades %}
+                <tr class="border-b transition hover:bg-gray-50">
+                    <td class="py-4 px-6 font-medium">{{ g.student.first_name }} {{ g.student.last_name }}</td>
+                    <td class="py-4 px-6">{{ g.group.name }}</td>
+                    <td class="py-4 px-6"><span class="px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs">{{ g.get_type_display }}</span></td>
+                    <td class="py-4 px-6 font-bold text-indigo-900">{{ g.score }} / {{ g.max_score }}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="4" class="p-6 text-center text-gray-400">Baholar shakllanmagan.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

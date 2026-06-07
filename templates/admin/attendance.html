@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Davomat | Admin Panel{% endblock %}
+{% block header_title %}Davomat Hisobotlari{% endblock %}
+{% block content %}
+<div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="p-6 border-b border-gray-100">
+        <h3 class="text-xl font-bold text-gray-800">Umumiy Davomat</h3>
+    </div>
+    <div class="p-0 overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="bg-gray-50 text-gray-600 text-sm border-b">
+                    <th class="py-4 px-6 font-medium">Sana</th>
+                    <th class="py-4 px-6 font-medium">Guruh</th>
+                    <th class="py-4 px-6 font-medium">O'quvchi</th>
+                    <th class="py-4 px-6 font-medium">Holati</th>
+                    <th class="py-4 px-6 font-medium">Belgiladi</th>
+                </tr>
+            </thead>
+            <tbody class="text-gray-700">
+                {% for a in attendances %}
+                <tr class="border-b transition hover:bg-gray-50">
+                    <td class="py-4 px-6">{{ a.date|date:"d M Y" }}</td>
+                    <td class="py-4 px-6 font-medium text-indigo-900">{{ a.group.name }}</td>
+                    <td class="py-4 px-6">{{ a.student.first_name }} {{ a.student.last_name }}</td>
+                    <td class="py-4 px-6">
+                        {% if a.status == 'present' %}
+                            <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs">Keldi</span>
+                        {% elif a.status == 'absent' %}
+                            <span class="px-3 py-1 bg-red-100 text-red-700 rounded-full text-xs">Kelmadi</span>
+                        {% else %}
+                            <span class="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-xs">Kech</span>
+                        {% endif %}
+                    </td>
+                    <td class="py-4 px-6 text-sm">{{ a.marked_by.first_name|default:"Tizim" }}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="5" class="p-6 text-center text-gray-400">Hech qanday davomat topilmadi.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

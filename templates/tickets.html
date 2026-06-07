@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Qo'llab-quvvatlash | ERP Tizimi{% endblock %}
+{% block header_title %}Qo'llab-quvvatlash (Tickets){% endblock %}
+
+{% block content %}
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    
+    <!-- Ticket Form -->
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:col-span-1 border-t-4 border-t-indigo-500 h-fit">
+        <h3 class="text-lg font-bold text-gray-800 mb-4">Yangi Murojaat</h3>
+        <form action="#" method="POST" class="space-y-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Mavzu</label>
+                <input type="text" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-gray-50 p-2 border" placeholder="Muammo qisqacha...">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Xabar matni</label>
+                <textarea rows="4" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-gray-50 p-2 border" placeholder="Batafsil tushuntiring..."></textarea>
+            </div>
+            <button type="submit" class="w-full bg-indigo-600 text-white font-medium py-2 rounded-lg hover:bg-indigo-700 transition">Yuborish</button>
+        </form>
+    </div>
+
+    <!-- Tickets List -->
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:col-span-2">
+        <h3 class="text-lg font-bold text-gray-800 mb-4">Sizning Murojaatlaringiz</h3>
+        
+            {% for ticket in tickets %}
+            <!-- Ticket Item -->
+            <div class="p-4 border rounded-xl hover:shadow-md transition bg-gray-50">
+                <div class="flex justify-between items-start mb-2">
+                    <h4 class="font-bold text-indigo-900">{{ ticket.subject }}</h4>
+                    {% if ticket.status == 'open' %}
+                    <span class="px-2 py-1 bg-red-100 text-red-700 text-xs rounded-full font-medium">Ochiq</span>
+                    {% elif ticket.status == 'in_progress' %}
+                    <span class="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs rounded-full font-medium">Jarayonda</span>
+                    {% else %}
+                    <span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full font-medium">Yopilgan</span>
+                    {% endif %}
+                </div>
+                <p class="text-sm text-gray-600 mb-3 line-clamp-2">{{ ticket.message }}</p>
+                <div class="flex items-center text-xs text-gray-400 gap-4">
+                    <span class="flex items-center gap-1"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> {{ ticket.user.first_name }} {{ ticket.user.last_name }}</span>
+                    <span>ID: #{{ ticket.id }}</span>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-gray-500 text-sm py-4">Sizda hali hech qanday murojaat yo'q.</p>
+            {% endfor %}
+    </div>
+    
+</div>
+{% endblock %}

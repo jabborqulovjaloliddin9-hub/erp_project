@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Guruhlarim | O'qituvchi Panel{% endblock %}
+{% block header_title %}Mening Guruhlarim{% endblock %}
+
+{% block content %}
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for g in groups %}
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex flex-col justify-between hover:shadow-md transition">
+        <div>
+            <div class="flex justify-between items-start mb-4">
+                <h3 class="text-xl font-bold text-gray-800">{{ g.name }}</h3>
+                <span class="bg-indigo-50 text-indigo-600 text-xs font-bold px-2 py-1 rounded">{{ g.get_status_display }}</span>
+            </div>
+            <p class="text-sm text-gray-500 mb-2"><strong>Kurs:</strong> {{ g.course.name|default:"Biriktirilmagan" }}</p>
+            <p class="text-sm text-gray-500 mb-4"><strong>O'quvchilar:</strong> {{ g.students.count }} / {{ g.capacity }}</p>
+        </div>
+        <div class="flex gap-2">
+            <button class="flex-1 bg-indigo-600 text-white font-medium text-sm py-2 rounded-lg hover:bg-indigo-700 transition">Davomat</button>
+            <button class="flex-1 bg-gray-50 text-gray-700 border border-gray-200 font-medium text-sm py-2 rounded-lg hover:bg-gray-100 transition">Vazifalar</button>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-span-full p-8 text-center bg-white rounded-2xl border border-gray-100">
+        <p class="text-gray-500">Sizga hali guruh biriktirilmagan.</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

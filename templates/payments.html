@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}To'lovlar | ERP Tizimi{% endblock %}
+{% block header_title %}To'lovlar Monitoringi{% endblock %}
+
+{% block content %}
+<div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-8 text-center bg-gradient-to-r from-indigo-50 to-blue-50">
+    <h2 class="text-2xl font-bold text-indigo-900 mb-2">Umumiy Tushum: 45,200,000 UZS</h2>
+    <p class="text-indigo-700 text-sm">Joriy oy uchun statistik ma'lumot</p>
+</div>
+
+<div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="p-6 border-b border-gray-100">
+        <h3 class="text-xl font-bold text-gray-800">Oxirgi To'lovlar (Tranzaksiyalar)</h3>
+    </div>
+    
+    <div class="p-0">
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="bg-gray-50 text-gray-600 text-sm border-b">
+                    <th class="py-4 px-6 font-medium">O'quvchi</th>
+                    <th class="py-4 px-6 font-medium">Summa</th>
+                    <th class="py-4 px-6 font-medium">Usul</th>
+                    <th class="py-4 px-6 font-medium">Sana</th>
+                    <th class="py-4 px-6 font-medium">Holat</th>
+                </tr>
+            </thead>
+            <tbody class="text-gray-700">
+                {% for payment in payments %}
+                <tr class="border-b transition hover:bg-gray-50">
+                    <td class="py-4 px-6 font-medium">{{ payment.user.first_name }} {{ payment.user.last_name }}</td>
+                    <td class="py-4 px-6 text-sm font-bold text-gray-800">{{ payment.amount }} UZS</td>
+                    <td class="py-4 px-6 text-sm">{{ payment.payment_method }}</td>
+                    <td class="py-4 px-6 text-sm text-gray-500">ID: {{ payment.id }}</td>
+                    <td class="py-4 px-6">
+                        {% if payment.status == 'success' %}
+                        <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs inline-flex items-center"><svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Muvaffaqiyatli</span>
+                        {% elif payment.status == 'pending' %}
+                        <span class="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-xs">Kutilmoqda</span>
+                        {% else %}
+                        <span class="px-3 py-1 bg-red-100 text-red-700 rounded-full text-xs">Bekor qilingan</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr class="border-b">
+                    <td colspan="5" class="py-4 px-6 text-center text-gray-500">Hech qanday to'lov mavjud emas.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

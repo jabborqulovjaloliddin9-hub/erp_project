@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Guruhlar | Admin Panel{% endblock %}
+{% block header_title %}Guruhlar Boshqaruvi{% endblock %}
+
+{% block content %}
+<div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="p-6 border-b border-gray-100 flex justify-between items-center">
+        <h3 class="text-xl font-bold text-gray-800">Guruhlar Ro'yxati</h3>
+        <button class="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 transition shadow-md">+ Yangi Guruh</button>
+    </div>
+    <div class="p-0 overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="bg-gray-50 text-gray-600 text-sm border-b">
+                    <th class="py-4 px-6 font-medium">Guruh Nomi</th>
+                    <th class="py-4 px-6 font-medium">Kurs</th>
+                    <th class="py-4 px-6 font-medium">O'qituvchi</th>
+                    <th class="py-4 px-6 font-medium">Holati</th>
+                    <th class="py-4 px-6 font-medium">O'quvchilar</th>
+                    <th class="py-4 px-6 font-medium text-right">O'zgartirish</th>
+                </tr>
+            </thead>
+            <tbody class="text-gray-700">
+                {% for g in groups %}
+                <tr class="border-b transition hover:bg-gray-50">
+                    <td class="py-4 px-6 font-bold text-indigo-900">{{ g.name }}</td>
+                    <td class="py-4 px-6 text-sm">{{ g.course.name|default:"-" }}</td>
+                    <td class="py-4 px-6 text-sm">{{ g.teacher.first_name }} {{ g.teacher.last_name }}</td>
+                    <td class="py-4 px-6">
+                        {% if g.status == 'active' %}
+                        <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs">Faol</span>
+                        {% else %}
+                        <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs">{{ g.get_status_display }}</span>
+                        {% endif %}
+                    </td>
+                    <td class="py-4 px-6 text-sm text-center font-bold">{{ g.students.count }} / {{ g.capacity }}</td>
+                    <td class="py-4 px-6 text-right">
+                        <button class="text-indigo-600 hover:text-indigo-800 text-sm font-medium mr-2">Tahrirlash</button>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="6" class="p-6 text-center text-gray-400">Hech qanday guruh mavjud emas.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

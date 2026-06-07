@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tizimga Kirish | ERP Tizimi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
+    </style>
+</head>
+<body class="bg-gray-50 h-screen flex items-center justify-center p-4">
+
+    <div class="max-w-md w-full bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+        <div class="bg-indigo-900 text-white p-6 text-center">
+            <h1 class="text-3xl font-bold tracking-wider mb-2">ERP<span class="text-indigo-400">Hub</span></h1>
+            <p class="text-indigo-200">Ta'limni boshqarish tizimi</p>
+        </div>
+        
+        <div class="p-8">
+            <h2 class="text-2xl font-bold text-gray-800 text-center mb-6">Tizimga Kirish</h2>
+            
+            {% if error %}
+            <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-6 rounded-r-md">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg>
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm text-red-700">{{ error }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if message %}
+            <div class="bg-green-50 border-l-4 border-green-500 p-4 mb-6 rounded-r-md">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <svg class="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm text-green-700">{{ message }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <form action="{% url 'login' %}" method="POST" class="space-y-5">
+                {% csrf_token %}
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Login (Username)</label>
+                    <input type="text" name="username" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500" placeholder="admin123">
+                </div>
+                
+                <div>
+                    <div class="flex justify-between items-center mb-1">
+                        <label class="block text-sm font-medium text-gray-700">Parol</label>
+                        <a href="#" class="text-xs text-indigo-600 hover:text-indigo-800">Parolni unutdingizmi?</a>
+                    </div>
+                    <input type="password" name="password" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500" placeholder="••••••••">
+                </div>
+                
+                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-lg transition duration-200 transform hover:scale-[1.02]">
+                    Kirish
+                </button>
+            </form>
+            
+            <div class="mt-6 text-center text-sm text-gray-600">
+                Hisobingiz yo'qmi? <a href="{% url 'register' %}" class="text-indigo-600 hover:text-indigo-800 font-medium font-bold">Ro'yxatdan o'tish</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

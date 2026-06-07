@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Davomat | O'qituvchi Panel{% endblock %}
+{% block header_title %}Davomat Belgilash{% endblock %}
+
+{% block content %}
+<div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+    <h3 class="text-xl font-bold text-gray-800 mb-4">Guruhni tanlang</h3>
+    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {% for g in groups %}
+        <div class="border border-gray-200 rounded-xl p-4 flex items-center justify-between hover:border-indigo-500 cursor-pointer transition">
+            <div>
+                <h4 class="font-bold text-indigo-900">{{ g.name }}</h4>
+                <p class="text-xs text-gray-500">{{ g.course.name|default:"-" }}</p>
+            </div>
+            <button class="bg-indigo-50 text-indigo-600 px-3 py-1 rounded text-sm font-medium">Davomat</button>
+        </div>
+        {% empty %}
+        <p class="text-gray-500">Sizga guruh taqsimlanmagan.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

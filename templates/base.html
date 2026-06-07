@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Zamonaviy ERP Tizimi{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
+        .glass-panel { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.3); }
+        .active-link { background-color: #4338ca; color: white; }
+    </style>
+</head>
+<body class="text-gray-800 antialiased h-screen flex overflow-hidden">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-indigo-900 text-white flex flex-col shadow-xl hidden md:flex">
+        <div class="h-16 flex items-center justify-center border-b border-indigo-800">
+            <h1 class="text-2xl font-bold tracking-wider">ERP<span class="text-indigo-400">Hub</span></h1>
+        </div>
+        <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+            {% if request.user.role == 'admin' %}
+                <a href="{% url 'admin_dashboard' %}" class="flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors hover:bg-indigo-700 {% if 'dashboard' in request.resolver_match.url_name %}active-link{% else %}text-indigo-200 hover:text-white{% endif %}">Dashboard</a>
+                <a href="{% url 'admin_users' %}" class="flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors hover:bg-indigo-700 text-indigo-200 hover:text-white">Foydalanuvchilar</a>
+                <a href="{% url 'admin_groups' %}" class="flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors hover:bg-indigo-700 text-indigo-200 hover:text-white">Guruhlar</a>
+                <a href="{% url 'admin_courses' %}" class="flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors hover:bg-indigo-700 text-indigo-200 hover:text-white">Kurslar</a>
+                <a href="{% url 'admin_attendance' %}" class="flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors hover:bg-indigo-700 text-indigo-200 hover:text-white">Davomat</a>
+                <a href="{% url 'admin_payments' %}" class="flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors hover:bg-indigo-700 text-indigo-200 hover:text-white">To'lovlar</a>
+                <a href="{% url 'admin_schedule' %}" class="flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors hover:bg-indigo-700 text-indigo-200 hover:text-white">Dars jadvali</a>
+                <a href="{% url 'admin_tasks' %}" class="flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors hover:bg-indigo-700 text-indigo-200 hover:text-white">Vazifalar</a>
+                <a href="{% url 'admin_results' %}" class="flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors hover:bg-indigo-700 text-indigo-200 hover:text-white">Natijalar</a>
+                <a href="{% url 'admin_support' %}" class="flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors hover:bg-indigo-700 text-indigo-200 hover:text-white">Tiketlar (Support)</a>
+                <a href="{% url 'admin_reports' %}" class="flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors hover:bg-indigo-700 text-indigo-200 hover:text-white">Hisobotlar</a>
+                <a href="{% url 'admin_notifications' %}" class="flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors hover:bg-indigo-700 text-indigo-200 hover:text-white">Bildirishnomalar</a>
+                <a href="{% url 'admin_settings' %}" class="flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors hover:bg-indigo-700 text-indigo-200 hover:text-white">Sozlamalar</a>
+
+            {% elif request.user.role == 'teacher' %}
+                <a href="{% url 'teacher_dashboard' %}" class="flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors hover:bg-indigo-700 text-indigo-200 hover:text-white">Dashboard</a>
+                <a href="{% url 'teacher_groups' %}" class="flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors hover:bg-indigo-700 text-indigo-200 hover:text-white">Mening Guruhlarim</a>
+                <a href="{% url 'teacher_attendance' %}" class="flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors hover:bg-indigo-700 text-indigo-200 hover:text-white">Davomat kiritish</a>
+                <a href="{% url 'teacher_tasks' %}" class="flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors hover:bg-indigo-700 text-indigo-200 hover:text-white">Vazifalar berish</a>
+                <a href="{% url 'teacher_grades' %}" class="flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors hover:bg-indigo-700 text-indigo-200 hover:text-white">Baholar Qo'yish</a>
+                <a href="{% url 'teacher_schedule' %}" class="flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors hover:bg-indigo-700 text-indigo-200 hover:text-white">Mening jadvalim</a>
+                <a href="{% url 'teacher_materials' %}" class="flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors hover:bg-indigo-700 text-indigo-200 hover:text-white">Materiallar</a>
+                <a href="{% url 'teacher_notifications' %}" class="flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors hover:bg-indigo-700 text-indigo-200 hover:text-white">Bildirishnomalar</a>
+
+            {% else %}
+                <!-- Student -->
+                <a href="{% url 'student_dashboard' %}" class="flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors hover:bg-indigo-700 text-indigo-200 hover:text-white">Dashboard</a>
+                <a href="{% url 'student_courses' %}" class="flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors hover:bg-indigo-700 text-indigo-200 hover:text-white">Mening Fanlarim</a>
+                <a href="{% url 'student_attendance' %}" class="flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors hover:bg-indigo-700 text-indigo-200 hover:text-white">Davomatim</a>
+                <a href="{% url 'student_tasks' %}" class="flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors hover:bg-indigo-700 text-indigo-200 hover:text-white">Vazifalar</a>
+                <a href="{% url 'student_grades' %}" class="flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors hover:bg-indigo-700 text-indigo-200 hover:text-white">Baholarim</a>
+                <a href="{% url 'student_schedule' %}" class="flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors hover:bg-indigo-700 text-indigo-200 hover:text-white">Dars Jadvalim</a>
+                <a href="{% url 'student_payments' %}" class="flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors hover:bg-indigo-700 text-indigo-200 hover:text-white">Moliya / To'lovlar</a>
+                <a href="{% url 'student_materials' %}" class="flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors hover:bg-indigo-700 text-indigo-200 hover:text-white">Materiallar</a>
+                <a href="{% url 'student_results' %}" class="flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors hover:bg-indigo-700 text-indigo-200 hover:text-white">Natijalar / Sertifikatlar</a>
+                <a href="{% url 'student_support' %}" class="flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors hover:bg-indigo-700 text-indigo-200 hover:text-white">Yordam / Tiketlar</a>
+            {% endif %}
+        </nav>
+        <div class="p-4 border-t border-indigo-800">
+            <a href="{% url 'logout' %}" class="w-full flex items-center justify-center gap-2 px-4 py-2 bg-red-500 hover:bg-red-600 rounded-lg text-white font-medium transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                Chiqish
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col h-screen overflow-hidden bg-gray-50">
+        <!-- Top Header -->
+        <header class="h-16 glass-panel border-b flex items-center justify-between px-6 z-10 sticky top-0 shadow-sm">
+            <div class="flex items-center gap-4">
+                <button class="md:hidden text-gray-500 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+                <h2 class="text-xl font-semibold text-gray-800">{% block header_title %}Asosiy Panel{% endblock %}</h2>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <span class="text-sm font-medium text-gray-600 border px-3 py-1 bg-white rounded-full">
+                    Sizning rolingiz: 
+                    {% if user.is_authenticated %}
+                        <strong class="text-indigo-600 capitalize">{{ user.role|default:"Mehmon" }}</strong>
+                    {% else %}
+                        <strong class="text-gray-400 capitalize">Tizimga kirmagan</strong>
+                    {% endif %}
+                </span>
+                <div class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-bold border-2 border-indigo-200">
+                    {{ user.username|default:"?"|make_list|first|upper }}
+                </div>
+            </div>
+        </header>
+
+        <!-- Dynamic Content Area -->
+        <div class="flex-1 overflow-auto p-6 scroll-smooth">
+            {% block content %}
+            <!-- Ma'lumotlar bu yerda chiqadi -->
+            {% endblock content %}
+        </div>
+    </main>
+
+</body>
+</html>

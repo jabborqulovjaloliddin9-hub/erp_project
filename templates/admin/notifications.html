@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Bildirishnomalar | Admin Panel{% endblock %}
+{% block header_title %}Bildirishnomalar (SMS/Elektron Pochta){% endblock %}
+{% block content %}
+<div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="p-6 border-b border-gray-100 flex justify-between items-center">
+        <h3 class="text-xl font-bold text-gray-800">Tarix</h3>
+        <button class="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 transition">+ Xabar jo'natish</button>
+    </div>
+    <div class="p-0 overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="bg-gray-50 text-gray-600 text-sm border-b">
+                    <th class="py-4 px-6 font-medium">Sana</th>
+                    <th class="py-4 px-6 font-medium">Qabul qiluvchi</th>
+                    <th class="py-4 px-6 font-medium">Mavzu</th>
+                    <th class="py-4 px-6 font-medium">O'qildi</th>
+                </tr>
+            </thead>
+            <tbody class="text-gray-700">
+                {% for n in notifications %}
+                <tr class="border-b transition hover:bg-gray-50">
+                    <td class="py-4 px-6 text-sm text-gray-500">{{ n.created_at|date:"d M Y, H:i" }}</td>
+                    <td class="py-4 px-6">{{ n.user.first_name }} {{ n.user.last_name }}</td>
+                    <td class="py-4 px-6 font-medium">{{ n.title }}</td>
+                    <td class="py-4 px-6">
+                        {% if n.is_read %} <span class="text-green-500 font-bold">✓</span> {% else %} <span class="text-red-500 font-bold">✗</span> {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="4" class="p-6 text-center text-gray-400">Bildirishnomalar mavjud emas.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

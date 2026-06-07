@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Yangi Vazifa | O'qituvchi Panel{% endblock %}
+{% block header_title %}Yangi Vazifa Yaratish{% endblock %}
+
+{% block content %}
+<div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 max-w-3xl mx-auto mt-6">
+    <h3 class="text-xl font-bold text-gray-800 mb-6 border-b pb-4">Vazifa Ma'lumotlarini Kiriting</h3>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="space-y-4 text-sm font-medium text-gray-700">
+            {{ form.as_p }}
+        </div>
+        <div class="flex justify-end gap-3 mt-8">
+            <a href="{% url 'teacher_tasks' %}" class="px-6 py-2.5 border border-gray-300 rounded-lg text-gray-700 font-bold hover:bg-gray-50 transition">Bekor qilish</a>
+            <button type="submit" class="px-6 py-2.5 bg-indigo-600 text-white rounded-lg font-bold hover:bg-indigo-700 transition shadow">Saqlash</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

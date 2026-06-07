@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Vazifalar | O'quvchi Panel{% endblock %}
+{% block header_title %}Mustaqil Ishlar va Vazifalar{% endblock %}
+
+{% block content %}
+<div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="p-6 border-b border-gray-100">
+        <h3 class="text-xl font-bold text-gray-800">Men topshirishim kerak bo'lgan vazifalar</h3>
+    </div>
+    <div class="p-0 overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="bg-gray-50 text-gray-600 text-sm border-b">
+                    <th class="py-4 px-6 font-medium">Vazifa Nomlanishi</th>
+                    <th class="py-4 px-6 font-medium">Fan / Guruh</th>
+                    <th class="py-4 px-6 font-medium text-center">Tugash Vaqti</th>
+                    <th class="py-4 px-6 font-medium text-right">O'qituvchi</th>
+                </tr>
+            </thead>
+            <tbody class="text-gray-700 text-sm">
+                {% for a in assignments %}
+                <tr class="border-b transition hover:bg-gray-50">
+                    <td class="py-4 px-6 font-medium text-indigo-700 underline cursor-pointer">{{ a.title }}</td>
+                    <td class="py-4 px-6">{{ a.group.course.name|default:a.group.name }}</td>
+                    <td class="py-4 px-6 text-center text-red-500">{{ a.due_date|date:"d M Y, H:i" }}</td>
+                    <td class="py-4 px-6 text-right">{{ a.teacher.first_name }}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="4" class="p-6 text-center text-gray-400">Yangi vazifalar yo'q.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Mening Fanlarim | O'quvchi Panel{% endblock %}
+{% block header_title %}Mening Fanlarim{% endblock %}
+
+{% block content %}
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for g in groups %}
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex flex-col justify-between hover:shadow-md transition">
+        <div>
+            <div class="flex justify-between items-start mb-4">
+                <h3 class="text-xl font-bold text-gray-800">{{ g.course.name|default:"Nomlanmagan Kurs" }}</h3>
+            </div>
+            <p class="text-sm text-gray-500 mb-2"><strong>Guruh:</strong> {{ g.name }}</p>
+            <p class="text-sm text-gray-500 mb-4"><strong>O'qituvchi:</strong> {{ g.teacher.first_name }} {{ g.teacher.last_name }}</p>
+        </div>
+        <div class="flex gap-2">
+            <button class="flex-1 bg-indigo-600 text-white font-medium text-sm py-2 rounded-lg hover:bg-indigo-700 transition">Vazifalar</button>
+            <button class="flex-1 bg-gray-50 text-gray-700 border border-gray-200 font-medium text-sm py-2 rounded-lg hover:bg-gray-100 transition">Jadval</button>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-span-full p-8 text-center bg-white rounded-2xl border border-gray-100">
+        <p class="text-gray-500">Siz hali hech qanday guruhga a'zo emassiz.</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
