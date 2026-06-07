@@ -40,7 +40,7 @@ Loyihani o'z kompyuteringizda ishga tushirish uchun quyidagi qadamlarni bajaring
 
 1. **Repozitoriyani yuklab oling (Clone):**
    ```bash
-   git clone https://github.com/jabborqulovjaloliddin9-hub/erp_project.git
+   git clone https://github.com/username/erp_project.git
    cd erp_project
    ```
 
